@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDebounce } from "react-use";
 import { updateSearchCount, getTrendingMovies } from "./appwrite";
 import Search from "./components/Search";
@@ -24,6 +24,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
+  const allMoviesSectionRef = useRef(null);
+
   // Debounced the search term to prevent API making too many requests.
   // by waiting for user to stop typing for 500 milliseconds.
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
@@ -44,21 +46,29 @@ function App() {
       const response = await fetch(endpoint, API_OPTIONS);
 
       if (!response.ok) {
-        throw new Error("Failed to fetch movies");
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (parseError) {
+          errorData = { status_message: response.statusText };
+        }
+        throw new Error(
+          `API ERROR: ${response.status} - ${
+            errorData?.status_message || "Failed to fetch movies."
+          }`
+        );
       }
 
       const data = await response.json();
 
-      if (data.response === "False") {
-        setErrorMessage(data.Error || "Failed to fetch movies");
-        setMovieList([]);
-        return;
-      }
-
       setMovieList(data.results || []);
 
-      if (query && data.results.length > 0) {
-        await updateSearchCount(query, data.results[0]);
+      if (query && data.results && data.results.length > 0) {
+        if (typeof updateSearchCount === "function") {
+          await updateSearchCount(query, data.results[0]);
+        } else {
+          console.warn("updateSearchCount function is not available");
+        }
       }
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
@@ -84,6 +94,15 @@ function App() {
   useEffect(() => {
     loadTrendingMovies();
   }, []);
+
+  const handleScrollMovies = () => {
+    if (allMoviesSectionRef.current) {
+      allMoviesSectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
 
   return (
     <main>
@@ -113,7 +132,11 @@ function App() {
               Find <span className="text-gradient">Movies</span> You'll Enjoy
               Without the Hassle
             </h1>
-            <Search search={searchTerm} setSearchTerm={setSearchTerm} />
+            <Search
+              search={searchTerm}
+              setSearchTerm={setSearchTerm}
+              onSearchClick={handleScrollMovies}
+            />
           </header>
           {trendingMovies.length > 0 && (
             <section className="trending">
@@ -128,7 +151,7 @@ function App() {
               </ul>
             </section>
           )}
-          <section className="all-movies">
+          <section className="all-movies" ref={allMoviesSectionRef}>
             <h2>All Movies</h2>
             {isLoading ? (
               <Spinner />
