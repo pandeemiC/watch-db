@@ -12,7 +12,7 @@ const Search = ({ setSearchTerm, searchTerm, onSearchClick }) => {
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && onSearchClick) {
-              e.prevent.Default();
+              e.preventDefault();
 
               onSearchClick();
             }
