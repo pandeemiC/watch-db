@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDebounce } from "react-use";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
@@ -19,8 +20,13 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
-  const fetchMovies = async () => {
+  // Debounced the search term to prevent API making too many requests.
+  // by waiting for user to stop typing for 500 milliseconds.
+  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
+
+  const fetchMovies = async (query = "") => {
     if (!API_KEY) {
       setIsLoading(false);
       setErrorMessage("API KEY IS MISSING PLEASE INSERT THE KEY");
@@ -30,7 +36,9 @@ function App() {
     setErrorMessage("");
     setMovieList([]);
     try {
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      const endpoint = query
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
       const response = await fetch(endpoint, API_OPTIONS);
 
       if (!response.ok) {
@@ -55,8 +63,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    fetchMovies(debouncedSearchTerm);
+  }, [debouncedSearchTerm]);
 
   return (
     <main>
@@ -77,6 +85,9 @@ function App() {
           </div>
         </nav>
         <div className="wrapper">
+          <div className="flex justify-center items-center">
+            <img src="./logo.svg" width={87} height={87} alt="logo" />
+          </div>
           <header>
             <img src="./hero-img.png" alt="hero-banner" />
             <h1>

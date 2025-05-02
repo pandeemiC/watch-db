@@ -44,7 +44,7 @@
   }
 
   header img {
-    @apply w-full max-w-lg h-auto object-contain mx-auto drop-shadow-md;
+    @apply w-full max-w-lg h-[325px] object-contain mx-auto drop-shadow-md;
   }
 }
 
@@ -133,7 +133,7 @@
     }
 
     & .content .lang {
-      @apply capitalize text-gray-100 font-medium text-base;
+      @apply uppercase text-gray-100 font-medium text-base;
     }
 
     & .content .year {
