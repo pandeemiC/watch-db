@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
+import MovieCard from "./components/MovieCard";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -60,6 +61,21 @@ function App() {
   return (
     <main>
       <div className="pattern">
+        <nav className="flex justify-between items-center w-screen p-5">
+          <ul className="flex items-center space-x-6 ml-5">
+            <li className="text-white bg-indigo-900 p-3 rounded-md cursor-pointer">
+              Browse
+            </li>
+            <li className="text-white cursor-pointer">About Us</li>
+            <li className="text-white cursor-pointer">Contact</li>
+          </ul>
+          <div className="flex justify-end gap-4 mr-5">
+            <button className="text-white bg-indigo-900 p-3 rounded-md cursor-pointer">
+              Sign Up
+            </button>
+            <button className="text-white cursor-pointer">Log In</button>
+          </div>
+        </nav>
         <div className="wrapper">
           <header>
             <img src="./hero-img.png" alt="hero-banner" />
@@ -71,7 +87,7 @@ function App() {
           </header>
 
           <section className="all-movies">
-            <h2>All Movies</h2>
+            <h2 className="mt-[40px]">All Movies</h2>
             {isLoading ? (
               <Spinner />
             ) : errorMessage ? (
@@ -79,9 +95,7 @@ function App() {
             ) : (
               <ul>
                 {movieList.map((movie) => (
-                  <p key={movie.id} className="text-white">
-                    {movie.title}
-                  </p>
+                  <MovieCard key={movie.id} movie={movie} />
                 ))}
               </ul>
             )}

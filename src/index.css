@@ -54,7 +54,7 @@
   }
 
   .wrapper {
-    @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
+    @apply px-5 pb-12 pt-0 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
   }
 
   .trending {
@@ -144,6 +144,10 @@
 
 @utility text-gradient {
   @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
+}
+
+@utility bg-gradient {
+  @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF];
 }
 
 @utility fancy-text {
