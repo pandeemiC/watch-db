@@ -207,7 +207,7 @@ function MovieDetails() {
               <div className="flex space-x-3 mt-4 md:mt-0">
                 <div className="bg-indigo-800 px-3 py-1 rounded-md flex items-center text-md cursor-pointer">
                   <svg
-                    class="w-3 h-3 mr-2 text-gray-800 dark:text-white"
+                    className="w-3 h-3 mr-2 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -215,9 +215,9 @@ function MovieDetails() {
                   >
                     <path
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"
                     />
                   </svg>
@@ -541,7 +541,7 @@ function MovieDetails() {
             {lightboxImages.length > 1 && (
               <button
                 onClick={showPrevImage}
-                className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer -translate-x-12 z-[110] bg-slate-800/70 text-white rounded-full p-2 ml-[8rem] hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed "
+                className="absolute cursor-pointer z-[110] bg-slate-800/70 text-white rounded-full p-2 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out bottom-4 left-4 md:left-2 md:sm:left-4 md:top-1/2 md:-translate-y-1/2 md:bottom-auto"
                 aria-label="Previeous Image"
                 disabled={currentImageIndex === 0}
               >
@@ -565,7 +565,7 @@ function MovieDetails() {
             {lightboxImages.length > 0 && (
               <button
                 onClick={showNextImage}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-[110] bg-slate-800/70 text-white rounded-full p-2 mr-[8rem] cursor-pointer hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute z-[110] bg-slate-800/70 text-white rounded-full p-2 cursor-pointer hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out bottom-4 right-4 md:right-2 md:sm:right-4 md:top-1/2 md:-translate-y-1/2 md:bottom-auto"
                 aria-label="Next image"
                 disabled={currentImageIndex === lightboxImages.length - 1}
               >

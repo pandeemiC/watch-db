@@ -108,7 +108,7 @@ function HomePage() {
   return (
     <div className="wrapper">
       <div className="flex justify-center items-center">
-        <img src="./logo.svg" width={87} height={87} alt="logo" />
+        <img src="./logo.svg" width={150} height={150} alt="logo" />
       </div>
       <header>
         <img src="./hero-img.png" alt="hero-banner" />
