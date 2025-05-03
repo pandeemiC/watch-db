@@ -121,19 +121,18 @@ function MovieDetails() {
 
   const showPrevImage = (e) => {
     e.stopPropagation();
-    if (currentImageIndex === null || lightboxImages.length === 0) return;
-
-    const newIndex =
-      (currentImageIndex - 1 + lightboxImages.length) % lightboxImages.length;
-    setCurrentImageIndex(newIndex);
+    setCurrentImageIndex((prevIndex) => {
+      if (prevIndex === null || lightboxImages.length === 0) return prevIndex;
+      return (prevIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    });
   };
 
   const showNextImage = (e) => {
     e.stopPropagation();
-    if (currentImageIndex === null || lightboxImages.length === 0) return;
-
-    const newIndex = (currentImageIndex + 1) % lightboxImages.length;
-    setCurrentImageIndex(newIndex);
+    setCurrentImageIndex((prevIndex) => {
+      if (prevIndex === null || lightboxImages.length === 0) return prevIndex;
+      return (prevIndex + 1) % lightboxImages.length;
+    });
   };
 
   if (isLoading) {
@@ -205,7 +204,26 @@ function MovieDetails() {
                   </span>
                 </div>
               )}
-              {/* Add other buttons like watchlist if needed */}
+              <div className="flex space-x-3 mt-4 md:mt-0">
+                <div className="bg-indigo-800 px-3 py-1 rounded-md flex items-center text-md cursor-pointer">
+                  <svg
+                    class="w-3 h-3 mr-2 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 8"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"
+                    />
+                  </svg>
+                  <span className="text-white">Add to Watchlist</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -239,7 +257,7 @@ function MovieDetails() {
                 ) : (
                   <PlaceholderBackdrop className="max-h-[450px]" />
                 )}
-                {/* Optional: Trailer Button Overlay */}
+
                 {movie.videos?.results?.find(
                   (v) =>
                     v.site === "YouTube" &&
@@ -477,7 +495,6 @@ function MovieDetails() {
       {/* LIGHTBOX */}
       {isLightBoxOpen && currentImageIndex !== null && (
         <div
-          // --- Overlay ---
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity duration-300"
           onClick={closeLightBox}
           role="dialog"
