@@ -63,6 +63,25 @@ function MovieDetails() {
     fetchDetails();
   }, [movieId]);
 
+  useEffect(() => {
+    if (!isLightBoxOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        closeLightBox();
+      } else if (e.key === "ArrowLeft") {
+        showPrevImage({ stopPropagation: () => {} }); // dummy event ?
+      } else if (e.key === "ArrowRight") {
+        showNextImage({ stopPropagation: () => {} }); // " " " " " "
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isLightBoxOpen]);
+
   // Helperssss
   const formatCurrency = (amount) => {
     if (!amount) return "N/A";
@@ -425,7 +444,7 @@ function MovieDetails() {
             </section>
           )}
 
-          {lightboxImages > 1 && (
+          {lightboxImages.length > 1 && (
             <section className="mt-12 border-t border-slate-700 pt-8">
               <h2 className="text-2xl font-semibold mb-6 text-indigo-300">
                 Images
@@ -458,6 +477,7 @@ function MovieDetails() {
       {/* LIGHTBOX */}
       {isLightBoxOpen && currentImageIndex !== null && (
         <div
+          // --- Overlay ---
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity duration-300"
           onClick={closeLightBox}
           role="dialog"
@@ -465,45 +485,46 @@ function MovieDetails() {
           aria-labelledby="lightbox-image"
         >
           <div
-            className="relative max-w-[90vw] max-h-[9vh] flex items-center justify-center"
+            className="relative w-full h-full flex items-center justify-center" // Adjusted to use full overlay space for button positioning
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              id="lightbox-image"
-              src={getImageUrl(
-                lightboxImages[currentImageIndex].file_path,
-                "original"
-              )}
-              alt={`Enlarged backdrop ${currentImageIndex + 1}`}
-              className="block max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-            />
+            <div className="relative inline-block max-w-[90vw] max-h-[90vh] align-middle">
+              <img
+                id="lightbox-image"
+                src={getImageUrl(
+                  lightboxImages[currentImageIndex].file_path,
+                  "original" // Fetch original size
+                )}
+                alt={`Enlarged backdrop ${currentImageIndex + 1}`}
+                className="block w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+              />
 
-            {/* Close button */}
-            <button
-              onClick={closeLightBox}
-              className="absolute -top-2 -right-2 md:top-2 md:right-2 z-[110] bg-slate-800/70 text-white rounded-full p-2 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white"
-              aria-label="Close Image"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+              <button
+                onClick={closeLightBox}
+                className="absolute cursor-pointer top-2 right-2 z-[120] bg-slate-800/70 text-white rounded-full p-1.5 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white"
+                aria-label="Close Image"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
             {/* Prev button */}
             {lightboxImages.length > 1 && (
               <button
                 onClick={showPrevImage}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-[110] bg-slate-800/70 text-white rounded-full p-2 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed "
+                className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer -translate-x-12 z-[110] bg-slate-800/70 text-white rounded-full p-2 ml-[8rem] hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed "
                 aria-label="Previeous Image"
                 disabled={currentImageIndex === 0}
               >
@@ -527,7 +548,7 @@ function MovieDetails() {
             {lightboxImages.length > 0 && (
               <button
                 onClick={showNextImage}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-[110] bg-slate-800/70 text-white rounded-full p-2 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-[110] bg-slate-800/70 text-white rounded-full p-2 mr-[8rem] cursor-pointer hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Next image"
                 disabled={currentImageIndex === lightboxImages.length - 1}
               >
