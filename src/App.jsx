@@ -1,115 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { useDebounce } from "react-use";
-import { updateSearchCount, getTrendingMovies } from "./appwrite";
-import Search from "./components/Search";
-import Spinner from "./components/Spinner";
-import MovieCard from "./components/MovieCard";
 
-// import HomePage from "./pages/HomePage";
-// import MovieDetails from "./pages/MovieDetails";
-// import NotFoundPage from "./pages/NotFoundPage";
-
-const API_BASE_URL = "https://api.themoviedb.org/3";
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-
-const API_OPTIONS = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${API_KEY}`,
-  },
-};
+import HomePage from "./pages/HomePage";
+import MovieDetails from "./pages/MovieDetails";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [movieList, setMovieList] = useState([]);
-  const [trendingMovies, setTrendingMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-
-  const allMoviesSectionRef = useRef(null);
-
-  // Debounced the search term to prevent API making too many requests.
-  // by waiting for user to stop typing for 500 milliseconds.
-  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
-
-  const fetchMovies = async (query = "") => {
-    if (!API_KEY) {
-      setIsLoading(false);
-      setErrorMessage("API KEY IS MISSING PLEASE INSERT THE KEY");
-      return;
-    }
-    setIsLoading(true);
-    setErrorMessage("");
-    setMovieList([]);
-    try {
-      const endpoint = query
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
-      const response = await fetch(endpoint, API_OPTIONS);
-
-      if (!response.ok) {
-        let errorData;
-        try {
-          errorData = await response.json();
-        } catch (parseError) {
-          errorData = { status_message: response.statusText };
-        }
-        throw new Error(
-          `API ERROR: ${response.status} - ${
-            errorData?.status_message || "Failed to fetch movies."
-          }`
-        );
-      }
-
-      const data = await response.json();
-
-      setMovieList(data.results || []);
-
-      if (query && data.results && data.results.length > 0) {
-        if (typeof updateSearchCount === "function") {
-          await updateSearchCount(query, data.results[0]);
-        } else {
-          console.warn("updateSearchCount function is not available");
-        }
-      }
-    } catch (error) {
-      console.error(`Error fetching movies: ${error}`);
-      setErrorMessage("Error fetching movies. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadTrendingMovies = async () => {
-    try {
-      const movies = await getTrendingMovies();
-      setTrendingMovies(movies);
-    } catch (error) {
-      console.error(`Error fetching trending movies: ${error}`);
-    }
-  };
-
-  useEffect(() => {
-    fetchMovies(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
-
-  useEffect(() => {
-    loadTrendingMovies();
-    fetchMovies();
-  }, []);
-
-  const handleScrollMovies = () => {
-    if (allMoviesSectionRef.current) {
-      allMoviesSectionRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
   return (
     <main>
       <div className="pattern">
