@@ -89,7 +89,7 @@ function HomePage() {
     setHighestRatedMovies([]);
 
     try {
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=vote_average.desc&vote_count.gte=200&include_adult=false&language=en-US&page=1`;
+      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=vote_average.desc&vote_count.gte=300&include_adult=false&language=en-US&page=1`;
       const response = await fetch(endpoint, API_OPTIONS);
 
       if (!response.ok) {
@@ -131,6 +131,7 @@ function HomePage() {
   useEffect(() => {
     loadTrendingMovies();
     fetchMovies();
+    fetchHighestRatedMovies();
   }, []);
 
   const handleScrollMovies = () => {
@@ -172,22 +173,51 @@ function HomePage() {
           </ul>
         </section>
       )}
-      <section className="all-movies" ref={allMoviesSectionRef}>
-        <h2>Popular Movies</h2>
-        {isLoading ? (
+      <section className="all-movies mb-10" ref={allMoviesSectionRef}>
+        <h2 className="text-3xl font-semibold mb-10 text-white">
+          {debouncedSearchTerm
+            ? `Results for "${debouncedSearchTerm}"`
+            : "Popular Movies"}
+        </h2>
+        {isLoading && movieList.length === 0 ? (
           <Spinner />
-        ) : errorMessage ? (
-          <p className="text-red-500">{errorMessage}</p>
-        ) : (
-          <ul>
+        ) : errorMessage && movieList.length === 0 ? (
+          <p className="text-red-500 text-center py-6">{errorMessage}</p>
+        ) : movieList.length > 0 ? (
+          // --- ADD GRID STYLING HERE ---
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {movieList.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </ul>
+        ) : (
+          <p className="text-white text-center py-6">
+            {debouncedSearchTerm
+              ? "No movies found matching your search."
+              : "No popular movies found."}
+          </p>
         )}
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       </section>
-      <section></section>
+      <section className="all-movies">
+        <h2 className="mb-10 font-semibold text-3xl text-white">
+          <span className="text-gradient">GOAT</span>(s)
+        </h2>
+        {isLoading && highestRatedMovies === 0 ? (
+          <Spinner />
+        ) : errorMessage && highestRatedMovies.length === 0 ? (
+          <p className="text-red-500 text-center py-6">{errorMessage}</p>
+        ) : highestRatedMovies.length > 0 ? (
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {highestRatedMovies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </ul>
+        ) : !isLoading ? (
+          <p className="text-red-500 text-center py-6">
+            Could not load highest rated movies.
+          </p>
+        ) : null}
+      </section>
     </div>
   );
 }
