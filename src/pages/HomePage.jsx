@@ -6,6 +6,12 @@ import Search from "../components/Search";
 import Spinner from "../components/Spinner";
 import MovieCard from "../components/MovieCard";
 import { faqData } from "../constants/faq.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faDiscord,
+  faGithub,
+  faLinkedin,
+} from "@fortawesome/free-brands-svg-icons";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -206,6 +212,14 @@ function HomePage() {
               : "No popular movies found."}
           </p>
         )}
+        <div className="flex justify-end mr-5">
+          <RouterLink
+            to="/browse"
+            className="inline-block my-6 text-indigo-400 hover:text-indigo-300 transition-colors"
+          >
+            → View More
+          </RouterLink>
+        </div>
       </section>
       <section className="all-movies">
         <h2 className="mb-10 font-semibold text-3xl text-white">
@@ -228,7 +242,7 @@ function HomePage() {
         ) : null}
         <div className="flex justify-end mr-5">
           <RouterLink
-            to="/"
+            to="/browse"
             className="inline-block my-6 text-indigo-400 hover:text-indigo-300 transition-colors"
           >
             → View More
@@ -336,6 +350,54 @@ function HomePage() {
           ))}
         </div>
       </section>
+      {/* FOOTER SECITON */}
+      <footer className="mt-16 pt-8 border-t border-slate-700">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-gray-500 text-sm text-center sm:text-left">
+            © {new Date().getFullYear()} WatchDB. All Rights Reserved. Powered
+            by React & TMDb.
+          </p>
+
+          {/* ICONS */}
+          <div className="flex items-center space-x-4">
+            <a
+              href="*"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Discord"
+            >
+              <FontAwesomeIcon
+                icon={faDiscord}
+                className="text-gray-400 hover:text-indigo-400 transition-colors text-xl"
+              />
+            </a>
+
+            <a
+              href="[YOUR_GITHUB_LINK_HERE]"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <FontAwesomeIcon
+                icon={faGithub}
+                className="text-gray-400 hover:text-white transition-colors text-xl"
+              />
+            </a>
+
+            <a
+              href="[YOUR_LINKEDIN_LINK_HERE]"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FontAwesomeIcon
+                icon={faLinkedin}
+                className="text-gray-400 hover:text-blue-500 transition-colors text-xl"
+              />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

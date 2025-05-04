@@ -12,21 +12,21 @@ export const faqData = [
   {
     question: "What kind of features will be implemented next?",
     answer:
-      "Refactored entry homepage for user to pick a category if they want to search Anime, TV Shows/Series or Movies. A browsing section for each category so the use can sort by rating, date, popularity etc. . User authentication via log-in, sign-Up functions in order for user to create lists by Adding or Removing their favorite movies, TV shows or anime. User reviews from the respective API or a different one. Streaming availability (if the idea is not too grand)",
+      "Refactored entry homepage for user to pick a category if they want to search Anime, TV Shows/Series or Movies. A browsing section for each category so the use can sort by rating, date, popularity etc. . User authentication via log-in, sign-Up functions in order for user to create lists by Adding or Removing their favorite movies, TV shows or anime. User reviews from the respective API or a different one. Streaming availability (if the idea is not too grand).",
   },
   {
     question: "Lorem ipsum dolor sit amet?",
     answer:
-      "In lectus ipsum, scelerisque ac tellus posuere, lacinia luctus arcu. Quisque sed feugiat sapien, quis pharetra sapien. Integer nec massa vestibulum, consectetur tortor nec, dignissim diam. Fusce lectus est, elementum quis ultrices quis, luctus eget nunc. Integer faucibus molestie mauris eget pellentesque. Quisque hendrerit tristique lorem, at rutrum dui varius sed",
+      "In lectus ipsum, scelerisque ac tellus posuere, lacinia luctus arcu. Quisque sed feugiat sapien, quis pharetra sapien. Integer nec massa vestibulum, consectetur tortor nec, dignissim diam. Fusce lectus est, elementum quis ultrices quis, luctus eget nunc. Integer faucibus molestie mauris eget pellentesque. Quisque hendrerit tristique lorem, at rutrum dui varius sed.",
   },
   {
     question: "Lorem ipsum dolor sit amet?",
     answer:
-      "In lectus ipsum, scelerisque ac tellus posuere, lacinia luctus arcu. Quisque sed feugiat sapien, quis pharetra sapien. Integer nec massa vestibulum, consectetur tortor nec, dignissim diam. Fusce lectus est, elementum quis ultrices quis, luctus eget nunc. Integer faucibus molestie mauris eget pellentesque. Quisque hendrerit tristique lorem, at rutrum dui varius sed",
+      "In lectus ipsum, scelerisque ac tellus posuere, lacinia luctus arcu. Quisque sed feugiat sapien, quis pharetra sapien. Integer nec massa vestibulum, consectetur tortor nec, dignissim diam. Fusce lectus est, elementum quis ultrices quis, luctus eget nunc. Integer faucibus molestie mauris eget pellentesque. Quisque hendrerit tristique lorem, at rutrum dui varius sed.",
   },
   {
     question: "Why though?",
     answer:
-      "To get a better understanding working with API's and modern functionalities that are required from a regular Front-End developer. But also for myself since I watch so many movies, it is easy to miss any hidden gems",
+      "To get a better understanding working with API's and modern functionalities that are required from a regular Front-End developer. But also for myself since I watch so many movies, it is easy to miss any hidden gems..",
   },
 ];
