@@ -21,6 +21,7 @@ function HomePage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [movieList, setMovieList] = useState([]);
   const [trendingMovies, setTrendingMovies] = useState([]);
+  const [highestRatedMovies, setHighestRatedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
@@ -73,6 +74,42 @@ function HomePage() {
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Error fetching movies. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchHighestRatedMovies = async () => {
+    if (!API_KEY) {
+      if (!errorMessage)
+        setErrorMessage("API KEY IS MISSING PLEASE INSERT THE KEY");
+      return;
+    }
+    if (!isLoading) setIsLoading(true);
+    setHighestRatedMovies([]);
+
+    try {
+      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=vote_average.desc&vote_count.gte=200&include_adult=false&language=en-US&page=1`;
+      const response = await fetch(endpoint, API_OPTIONS);
+
+      if (!response.ok) {
+        let errorData;
+        try {
+          errorData = response.json();
+        } catch (err) {}
+        throw new Error(
+          `API ERROR ${response.status} - ${
+            errorData?.status_message || "Failed to fetch highest rated movies"
+          }`
+        );
+      }
+
+      const data = await response.json();
+      setHighestRatedMovies(data.results || []);
+    } catch (err) {
+      console.error(`There was an error loading the fetch: ${err}`);
+      setErrorMessage(err.message || "Error fetching highest rated movies.");
+      setHighestRatedMovies([]);
     } finally {
       setIsLoading(false);
     }
@@ -136,7 +173,7 @@ function HomePage() {
         </section>
       )}
       <section className="all-movies" ref={allMoviesSectionRef}>
-        <h2>All Movies</h2>
+        <h2>Popular Movies</h2>
         {isLoading ? (
           <Spinner />
         ) : errorMessage ? (
@@ -150,6 +187,7 @@ function HomePage() {
         )}
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       </section>
+      <section></section>
     </div>
   );
 }
