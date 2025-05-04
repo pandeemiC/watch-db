@@ -259,21 +259,21 @@ function MovieDetails() {
                 )}
 
                 {movie.videos?.results?.find(
-                  (v) =>
-                    v.site === "YouTube" &&
-                    (v.type === "Trailer" || v.type === "Teaser")
+                  (vod) =>
+                    vod.site === "YouTube" &&
+                    (vod.type === "Trailer" || vod.type === "Teaser")
                 ) && (
                   <a
                     href={`https://www.youtube.com/watch?v=${
                       movie.videos.results.find(
-                        (v) =>
-                          v.site === "YouTube" &&
-                          (v.type === "Trailer" || v.type === "Teaser")
+                        (vod) =>
+                          vod.site === "YouTube" &&
+                          (vod.type === "Trailer" || vod.type === "Teaser")
                       ).key
                     }`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute bottom-4 left-4 bg-black bg-opacity-70 px-4 py-2 rounded-md text-white hover:bg-opacity-90 transition flex items-center space-x-2"
+                    className="absolute bottom-4 left-4 bg-black bg-opacity-70 px-4 py-2 rounded-md text-white hover:bg-opacity-30 transition flex items-center space-x-2"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -377,7 +377,7 @@ function MovieDetails() {
                     <div>
                       <strong className="text-gray-400 block">Countries</strong>{" "}
                       {movie.production_countries
-                        .map((c) => c.name)
+                        .map((country) => country.name)
                         .join(" · ")}
                     </div>
                   )}
@@ -391,7 +391,7 @@ function MovieDetails() {
                     <div>
                       <strong className="text-gray-400 block">Language</strong>{" "}
                       {movie.spoken_languages
-                        .map((l) => l.english_name)
+                        .map((lang) => lang.english_name)
                         .join(" · ")}
                     </div>
                   )}
