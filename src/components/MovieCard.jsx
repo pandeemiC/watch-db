@@ -1,16 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import PlaceholderPoster from "../components/PlaceholderPoster";
+import PlaceholderBackdrop from "../components/PlaceholderBackdrop";
+import PlaceholderProfile from "../components/PlaceholderProfile";
+
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const MovieCard = ({ movie }) => {
   const imageUrl = movie.poster_path
     ? `${IMAGE_BASE_URL}${movie.poster_path}`
-    : "/placeholder-poster.png"; //fallback
+    : "/no-movie.png"; //fallback
 
   const handleImageError = (e) => {
     e.target.onerror = null;
-    e.target.style.display = "none";
+    e.target.style.display = "";
   };
 
   return (
@@ -29,11 +33,14 @@ const MovieCard = ({ movie }) => {
           >
             {movie.title}
           </h3>
-
-          <p className="text-gray-400 text-xs">
-            {movie.release_date ? movie.release_date.substring(0, 4) : "N/A"}
-          </p>
-          {/* <p className="text-yellow-400 text-xs">⭐ {movie.vote_average?.toFixed(1)}</p> */}
+          <div className="flex justify-between">
+            <p className="text-gray-400 text-xs">
+              {movie.release_date ? movie.release_date.substring(0, 4) : "N/A"}
+            </p>
+            <p className="text-yellow-400 text-xs">
+              ⭐ {movie.vote_average?.toFixed(1)}
+            </p>
+          </div>
         </div>
       </li>
     </Link>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDebounce } from "react-use";
 import { updateSearchCount, getTrendingMovies } from "../appwrite";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import Search from "../components/Search";
 import Spinner from "../components/Spinner";
 import MovieCard from "../components/MovieCard";
@@ -89,7 +90,7 @@ function HomePage() {
     setHighestRatedMovies([]);
 
     try {
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=vote_average.desc&vote_count.gte=300&include_adult=false&language=en-US&page=1`;
+      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=vote_average.desc&vote_count.gte=1000&include_adult=false&language=en-US&page=1`;
       const response = await fetch(endpoint, API_OPTIONS);
 
       if (!response.ok) {
@@ -174,11 +175,14 @@ function HomePage() {
         </section>
       )}
       <section className="all-movies mb-10" ref={allMoviesSectionRef}>
-        <h2 className="text-3xl font-semibold mb-10 text-white">
-          {debouncedSearchTerm
-            ? `Results for "${debouncedSearchTerm}"`
-            : "Popular Movies"}
-        </h2>
+        {debouncedSearchTerm ? (
+          <h2>{`Results for "${debouncedSearchTerm}"`}</h2>
+        ) : (
+          <h2 className="3xl font-semibold mb-10 text-white">
+            <span className="text-gradient">Popular </span>Movies
+          </h2>
+        )}
+
         {isLoading && movieList.length === 0 ? (
           <Spinner />
         ) : errorMessage && movieList.length === 0 ? (
@@ -216,6 +220,14 @@ function HomePage() {
             Could not load highest rated movies.
           </p>
         ) : null}
+        <div className="flex justify-end mr-5">
+          <RouterLink
+            to="/"
+            className="inline-block mb-6 text-indigo-400 hover:text-indigo-300 transition-colors"
+          >
+            → View More
+          </RouterLink>
+        </div>
       </section>
     </div>
   );
