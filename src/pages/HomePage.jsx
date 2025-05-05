@@ -235,16 +235,17 @@ function HomePage() {
           if (!heroMovie) return null; // so the currentHero doesn't derive on its private scope
 
           return (
-            <section className="hero relative w-full h-[70vh] md:h-[85vh] lg:h-[90vh] overflow-hidden mb-16 text-white">
+            <section className="hero relative w-full h-[70vh] md:h-[85vh] lg:h-[90vh] overflow-hidden mb-16 text-white transition-all duration-300 ease-in-out">
               {heroMovie.backdrop_path ? (
                 <img
                   key={heroMovie.id}
                   src={getImageUrl(heroMovie.backdrop_path, "original")}
                   alt={`${heroMovie.title} backdrop`}
-                  className="absolute inset-0 w-full h-full object-cover -z-10 transition-opacity duration-700 ease-in-out"
+                  className="absolute inset-0 w-full h-full object-cover -z-10 transition-opacity opacity-100 duration-1000 ease-in-out"
                   onError={handleImageError}
                 />
               ) : (
+                // fallback
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-900 to-indigo-900 -z-10"></div>
               )}
 
@@ -260,7 +261,7 @@ function HomePage() {
 
               {/* HERO CONTENT */}
               <div className="relative z-10 h-full grid grid-cols-2 items-end p-6 sm:p-10 md:p-16 max-w-7xl mx-auto">
-                <div className="col-span-2 md:col-span-1 max-w-xl lg:max-w-2xl">
+                <div className="col-span-2 md:col-span-1 max-w-xl lg:max-w-2xl transition-opacity duration-500 ease-in-out">
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 leading-tight lg:leading-snug shadow-black/60 [text-shadow:_0_2px_6px_var(--tw-shadow-color)] text-start">
                     {heroMovie.title}
                   </h1>
