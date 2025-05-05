@@ -88,10 +88,23 @@ function HomePage() {
       setMovieList(results);
 
       if (!query && results.length > 0 && currentHeroIndex === null) {
-        const initialIndex = results.findIndex((movie) => movie.backdrop_path);
-        setCurrentHeroIndex(initialIndex >= 0 ? initialIndex : 0);
-      }
+        const moviesWithBackdrops = results.filter(
+          (movie) => movie.backdrop_path
+        );
+        if (moviesWithBackdrops.length > 0) {
+          const randomIndex = Math.floor(
+            Math.random() * moviesWithBackdrops.length
+          );
+          const randomMovie = moviesWithBackdrops[randomIndex];
+          const originalIndex = results.findIndex(
+            (movie) => movie.id === randomMovie.id
+          );
 
+          setCurrentHeroIndex(originalIndex >= 0 ? originalIndex : 0);
+        } else {
+          setCurrentHeroIndex(0);
+        }
+      }
       // Appwrite search count update
       if (query && results.length > 0) {
         if (typeof updateSearchCount === "function") {
@@ -165,6 +178,18 @@ function HomePage() {
     fetchHighestRatedMovies();
   }, []);
 
+  useEffect(() => {
+    if (movieList.length > 0 && currentHeroIndex !== null) {
+      const intervalId = setInterval(() => {
+        handleNextHero(); // mention the interval
+      }, 8000); // 8 secs
+      // cleaning up of the interval
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [movieList, currentHeroIndex]);
+
   const handleScrollMovies = () => {
     if (allMoviesSectionRef.current) {
       allMoviesSectionRef.current.scrollIntoView({
@@ -203,149 +228,143 @@ function HomePage() {
 
   return (
     <>
-      {
-        currentHeroIndex !== null &&
-          movieList.length > 0 &&
-          // IIFE to get derived heroMovie object safely
-          (() => {
-            const heroMovie = movieList[currentHeroIndex];
-            if (!heroMovie) return null; // Safety check
+      {currentHeroIndex !== null &&
+        movieList.length > 0 &&
+        (() => {
+          const heroMovie = movieList[currentHeroIndex]; // first time ever trying IIFE
+          if (!heroMovie) return null; // so the currentHero doesn't derive on its private scope
 
-            return (
-              <section className="hero relative w-full h-[70vh] md:h-[85vh] lg:h-[90vh] overflow-hidden mb-16 text-white">
-                {/* Background Image */}
-                {heroMovie.backdrop_path ? (
-                  <img
-                    key={heroMovie.id} // Key for transitions
-                    src={getImageUrl(heroMovie.backdrop_path, "original")}
-                    alt={`${heroMovie.title} backdrop`}
-                    className="absolute inset-0 w-full h-full object-cover -z-10 transition-opacity duration-700 ease-in-out"
-                    onError={handleImageError}
-                  />
-                ) : (
-                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-900 to-indigo-900 -z-10"></div>
-                )}
+          return (
+            <section className="hero relative w-full h-[70vh] md:h-[85vh] lg:h-[90vh] overflow-hidden mb-16 text-white">
+              {heroMovie.backdrop_path ? (
+                <img
+                  key={heroMovie.id}
+                  src={getImageUrl(heroMovie.backdrop_path, "original")}
+                  alt={`${heroMovie.title} backdrop`}
+                  className="absolute inset-0 w-full h-full object-cover -z-10 transition-opacity duration-700 ease-in-out"
+                  onError={handleImageError}
+                />
+              ) : (
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-900 to-indigo-900 -z-10"></div>
+              )}
 
-                {/* Darkening Gradients */}
-                <div
-                  className="absolute inset-x-0 bottom-0 z-0 h-2/3 bg-gradient-to-t from-primary via-primary/80 to-transparent"
-                  aria-hidden="true"
-                ></div>
-                <div
-                  className="absolute inset-y-0 left-0 z-0 w-2/3 md:w-1/2 bg-gradient-to-r from-primary/60 via-primary/30 to-transparent"
-                  aria-hidden="true"
-                ></div>
+              {/* Darkening Gradient */}
+              <div
+                className="absolute inset-x-0 bottom-0 z-0 h-2/3 bg-gradient-to-t from-primary via-primary/80 to-transparent"
+                aria-hidden="true"
+              ></div>
+              <div
+                className="absolute inset-y-0 left-0 z-0 w-2/3 md:w-1/2 bg-gradient-to-r from-primary/60 via-primary/30 to-transparent"
+                aria-hidden="true"
+              ></div>
 
-                {/* Content Overlay */}
-                <div className="relative z-10 h-full grid grid-cols-2 items-end p-6 sm:p-10 md:p-16 max-w-7xl mx-auto">
-                  {/* Left Column: Text */}
-                  <div className="col-span-2 md:col-span-1 max-w-xl lg:max-w-2xl">
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 leading-tight lg:leading-snug shadow-black/60 [text-shadow:_0_2px_6px_var(--tw-shadow-color)] text-start">
-                      {heroMovie.title}
-                    </h1>
-                    <div className="flex items-center flex-wrap gap-x-4 gap-y-1 mb-5 text-slate-200 text-sm md:text-base font-medium">
-                      {heroMovie.release_date && (
-                        <span>{heroMovie.release_date.substring(0, 4)}</span>
-                      )}
-                      {heroMovie.vote_average > 0 && (
-                        <span className="flex items-center gap-1.5 backdrop-blur-sm bg-black/20 px-2 py-0.5 rounded-full">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-4 h-4 text-yellow-400"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          {heroMovie.vote_average.toFixed(1)}
-                        </span>
-                      )}
-                    </div>
-                    <p className="hidden md:block text-slate-300 text-base leading-relaxed line-clamp-3 mb-8">
-                      {heroMovie.overview}
-                    </p>
-                    <RouterLink
-                      to={`/movie/${heroMovie.id}`}
-                      className="inline-flex items-center justify-center gap-2 bg-gradient text-primary font-semibold px-8 py-3 rounded-lg transition duration-300 ease-in-out transform hover:scale-[1.03] hover:shadow-lg hover:shadow-purple-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-[#AB8BFF]"
-                    >
-                      View Details
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                    </RouterLink>
+              {/* HERO CONTENT */}
+              <div className="relative z-10 h-full grid grid-cols-2 items-end p-6 sm:p-10 md:p-16 max-w-7xl mx-auto">
+                <div className="col-span-2 md:col-span-1 max-w-xl lg:max-w-2xl">
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 leading-tight lg:leading-snug shadow-black/60 [text-shadow:_0_2px_6px_var(--tw-shadow-color)] text-start">
+                    {heroMovie.title}
+                  </h1>
+                  <div className="flex items-center flex-wrap gap-x-4 gap-y-1 mb-5 text-slate-200 text-sm md:text-base font-medium">
+                    {heroMovie.release_date && (
+                      <span>{heroMovie.release_date.substring(0, 4)}</span>
+                    )}
+                    {heroMovie.vote_average > 0 && (
+                      <span className="flex items-center gap-1.5 backdrop-blur-sm bg-black/20 px-2 py-0.5 rounded-full">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-4 h-4 text-yellow-400"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        {heroMovie.vote_average.toFixed(1)}
+                      </span>
+                    )}
                   </div>
-
-                  {/* Right Column: Navigation Buttons */}
-                  {movieList.length > 1 && (
-                    <div className="hidden md:flex col-span-1 justify-end items-center pb-6">
-                      {" "}
-                      {/* Added padding-bottom */}
-                      <div className="flex flex-col gap-3 backdrop-blur-sm bg-black/20 p-2 rounded-full">
-                        <button
-                          onClick={handlePrevHero}
-                          className="text-white/80 hover:text-white disabled:text-white/30 transition-colors duration-200 focus:outline-none"
-                          aria-label="Previous hero movie"
-                          disabled={movieList.length <= 1}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2.5}
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M15.75 19.5 8.25 12l7.5-7.5"
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          onClick={handleNextHero}
-                          className="text-white/80 hover:text-white disabled:text-white/30 transition-colors duration-200 focus:outline-none"
-                          aria-label="Next hero movie"
-                          disabled={movieList.length <= 1}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2.5}
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  )}
+                  <p className="hidden md:block text-slate-300 text-base leading-relaxed line-clamp-3 mb-8">
+                    {heroMovie.overview}
+                  </p>
+                  <RouterLink
+                    to={`/movie/${heroMovie.id}`}
+                    className="inline-flex items-center justify-center gap-2 bg-gradient text-primary font-semibold px-8 py-3 rounded-lg transition duration-300 ease-in-out transform hover:scale-[1.03] hover:shadow-lg hover:shadow-purple-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-[#AB8BFF]"
+                  >
+                    View Details
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                      />
+                    </svg>
+                  </RouterLink>
                 </div>
-              </section>
-            );
-          })() // End IIFE
-      }
+
+                {/* NAV BUTTONS */}
+                {movieList.length > 1 && (
+                  <div className="hidden md:flex col-span-1 justify-end items-center pb-6">
+                    <div className="flex flex-row gap-10 backdrop-blur-sm bg-black/20 p-2 rounded-full">
+                      <button
+                        onClick={handlePrevHero}
+                        className="text-white/80 hover:text-white disabled:text-white/30 transition-colors duration-200 focus:outline-none"
+                        aria-label="Previous hero movie"
+                        disabled={movieList.length <= 1}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 19.5 8.25 12l7.5-7.5"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={handleNextHero}
+                        className="text-white/80 hover:text-white disabled:text-white/30 transition-colors duration-200 focus:outline-none"
+                        aria-label="Next hero movie"
+                        disabled={movieList.length <= 1}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          );
+        })()}
+      {/* REST OF LAYOUT W SEARCH */}
       <div className="wrapper px-4 md:px-8 lg:px-12 pt-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
