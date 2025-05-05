@@ -67,7 +67,8 @@ function MovieDetails() {
     if (!isLightBoxOpen) return;
 
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
+      console.log("Keydown:", e.key);
+      if (e.key === "Escape" || e.code === "Escape") {
         closeLightBox();
       } else if (e.key === "ArrowLeft") {
         showPrevImage({ stopPropagation: () => {} }); // dummy event ?
@@ -116,7 +117,6 @@ function MovieDetails() {
 
   const closeLightBox = () => {
     setIsLightBoxOpen(false);
-    setTimeout(() => setCurrentImageIndex(null), 300); // smoother closing via timeout hoho
   };
 
   const showPrevImage = (e) => {
@@ -513,12 +513,12 @@ function MovieDetails() {
                   "original" // Fetch original size
                 )}
                 alt={`Enlarged backdrop ${currentImageIndex + 1}`}
-                className="block w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                className="block w-auto h-auto max-w-full z-[110] max-h-full object-contain rounded-lg shadow-2xl"
               />
 
               <button
                 onClick={closeLightBox}
-                className="absolute cursor-pointer top-2 right-2 z-[120] bg-slate-800/70 text-white rounded-full p-1.5 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white"
+                className="absolute cursor-pointer xl:top-15 xl:right-15 top-2 right-2 z-[120] bg-slate-800/70 text-white rounded-full p-1.5 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-white"
                 aria-label="Close Image"
               >
                 <svg

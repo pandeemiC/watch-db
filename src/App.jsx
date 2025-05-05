@@ -9,25 +9,22 @@ import NotFoundPage from "./pages/NotFoundPage";
 function App() {
   return (
     <main className="min-h-screen bg-primary">
-      {/* Background pattern - ensure it's behind everything */}
-      <div className="pattern absolute inset-0 z-0"></div>
+      {/* <div className="pattern absolute inset-0 z-0"></div> */}
 
-      {/* --- UPDATED Navbar --- */}
       <nav
         className="sticky top-0 z-50 w-full
-                   px-4 md:px-8 lg:px-12 py-3 /* Consistent padding */
-                   bg-primary/80 /* Use theme color with opacity */
-                   backdrop-blur-md /* Blur effect */
-                   border-b border-slate-700/50 /* Subtle bottom border */
+                   px-4 md:px-8 lg:px-12 py-3 
+                   bg-primary/80 
+                   backdrop-blur-md 
+                   border-b border-slate-700/50 
                    "
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* Logo */}
           <RouterLink to="/" className="flex-shrink-0">
             <img
-              src="/logo.svg" // Ensure path is relative to public folder
+              src="/logo.svg"
               alt="WatchDBLogo"
-              className="h-8 md:h-15 w-auto" // Adjust size
+              className="h-8 md:h-15 w-auto"
             />
           </RouterLink>
 
@@ -66,12 +63,7 @@ function App() {
             </li>
           </ul>
 
-          {/* Action Buttons */}
-          {/* Added basic styling matching other buttons */}
           <div className="flex items-center gap-3">
-            {/* Add Mobile Menu Button Here Later if needed */}
-            {/* <button className="md:hidden text-gray-300 hover:text-white">Menu</button> */}
-
             <button className="hidden sm:inline-block text-white font-medium px-4 py-1.5 rounded-md hover:bg-slate-700/50 transition">
               Log In
             </button>
