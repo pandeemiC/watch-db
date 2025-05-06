@@ -1,12 +1,10 @@
-# MovieDB 🎬: Modern Movie Discovery
+# WatchDB 🎬: Movie Discovery
 
 <p align="center">
-  <img src="<./logo.png>" alt="MovieDBLogo" width="100%">
+  <img src="<./logo.png>" alt="WatchDBLogo" width="100%">
 </p>
 
-**CineScope** is a modern responsive web application built with React and Tailwind CSS, designed for discovering and exploring movies. Making use of The Movie Database (TMDb) API and exploring backend capabilities with **Appwrite**, users can browse popular and top-rated films, search for specific titles, view detailed information, and interact with basic analytics features(?).
-
-**[✨ View Live Demo ✨]([Link to Live Demo - e.g., Netlify, Vercel])** _(<- Replace with your deployed link!)_
+**WatchDB** is a modern responsive web application built with React and Tailwind CSS, designed for discovering and exploring movies. Making use of The Movie Database (TMDb) API and exploring backend capabilities with **Appwrite**, users can browse popular and top-rated films, search for specific titles, view detailed information, and interact with basic analytics features(?).
 
 ---
 
@@ -22,7 +20,6 @@
 - [🔑 API](#-api)
 - [🧠 Developer Experience & Learning](#-developer-experience--learning)
 - [🔮 Future Enhancements](#-future-enhancements)
-- [📄 License](#-license)
 - [👋 Contact](#-contact)
 
 ---
@@ -34,17 +31,17 @@ _(Replace these placeholders with actual screenshots of your application!)_
 <details>
 <summary>Click to view screenshots</summary>
 
-|                 Homepage (Desktop)                  |                   Movie Details (Desktop)                    |
-| :-------------------------------------------------: | :----------------------------------------------------------: |
-| ![Homepage](./path/to/your/homepage-screenshot.png) | ![Movie Details](./path/to/your/details-page-screenshot.png) |
+|           Homepage (Desktop)           |             Movie Details (Desktop)             |
+| :------------------------------------: | :---------------------------------------------: |
+| ![Homepage](./public/watchdb_hero.png) | ![Movie Details](./public/watchdb_details1.png) |
 
-|                   Search & Scroll                   |                      Image Lightbox                      |
-| :-------------------------------------------------: | :------------------------------------------------------: |
-| ![Search/Scroll GIF](./path/to/your/search-gif.gif) | ![Lightbox View](./path/to/your/lightbox-screenshot.png) |
+|                      Cards                      |                 Image Lightbox                  |
+| :---------------------------------------------: | :---------------------------------------------: |
+| ![Search/Scroll GIF](./public/watchdb_card.png) | ![Lightbox View](./public/watchdb_lightbox.png) |
 
-|              Responsive Design (Mobile)              |                     GOAT Movies Section                     |
-| :--------------------------------------------------: | :---------------------------------------------------------: |
-| ![Mobile View](./path/to/your/mobile-screenshot.png) | ![GOAT Section](./path/to/your/goat-section-screenshot.png) |
+|            Responsive Design (Mobile)            |                    Other                     |
+| :----------------------------------------------: | :------------------------------------------: |
+| ![Mobile View](./public/watchdb_responsive1.png) | ![GOAT Section](./public/watchdb_browse.png) |
 
 </details>
 
@@ -63,7 +60,7 @@ _(Replace these placeholders with actual screenshots of your application!)_
   - Dedicated page for each movie (`react-router-dom`).
   - Displays poster, backdrop, title, rating, release date, runtime, overview, genres.
   - Detailed information including budget, revenue, status, languages, production companies, and tagline.
-  - Displays top-billed cast members with profile pictures (or placeholders).
+  - Display of top-billed cast members with profile pictures (or placeholders).
   - Links to the movie's official homepage and YouTube trailer (if available).
   - Visually appealing container with a subtle background glow effect.
 - **Interactive Image Lightbox:**
@@ -80,11 +77,11 @@ _(Replace these placeholders with actual screenshots of your application!)_
 ## 🛠️ Tech Stack
 
 - **Frontend:**
-  - [React](https://reactjs.org/) (with Vite for build tooling)
+  - [React](https://reactjs.org/) (via Vite)
   - [React Router DOM](https://reactrouter.com/) for page navigation
-  - [Tailwind CSS](https://tailwindcss.com/) for utility-first styling
-- **Backend / BaaS:** <!-- Added Category -->
-  - [Appwrite](https://appwrite.io/) (Self-hosted or Cloud) for database and other features.
+  - [Tailwind CSS](https://tailwindcss.com/) for styling
+- **Backend / BaaS:**
+  - [Appwrite](https://appwrite.io/) for database and other features.
 - **State Management:** React Hooks (`useState`, `useEffect`, `useRef`)
 - **API:** [The Movie Database (TMDb) API](https://developer.themoviedb.org/docs)
 - **Utilities:**
@@ -100,7 +97,7 @@ Follow these instructions to get a local copy up and running for development pur
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (LTS version recommended)
+- [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
 ### Installation & Setup
@@ -156,13 +153,13 @@ This project relies heavily on [The Movie Database (TMDb) API](https://developer
 ## 🧠 Developer Experience & Learning
 
 **Motivation:**
-My primary goal was to honestly make something that is real-world friendly. A project that I could use on my spare time but also something that I could recommend to my friends. In the end, it was a great practice and learning experience to further get better at developing under related technologies.
+My primary goal was to honestly make something that is real-world friendly. A project that I could use on my spare time but also something that I could recommend to my friends and family. In the end, it was a great practice and learning experience to further get better at developing under related technologies.
 
 **Key Learnings & Skills Applied:**
 
 - **React Fundamentals:** Component composition, state management (`useState`), lifecycle methods and side effects (`useEffect`), handling user events, conditional rendering, and using refs (`useRef`) for DOM manipulation (like smooth scrolling).
 - **Routing:** Implementing client-side routing for a multi-page feel using `react-router-dom`, including dynamic routes with URL parameters (`useParams`) for the movie detail pages.
-- **API Integration:** Making asynchronous API calls using the `fetch` API and `async/await`, handling responses, parsing JSON data, and managing loading/error states gracefully. Understanding API documentation (TMDb).
+- **API Integration:** Making asynchronous API calls using the `fetch` API and `async/await`, handling responses, parsing JSON data, and managing loading/error states. Understanding API documentation (TMDb).
 - **Backend-as-a-Service (Appwrite):**
   - Gained experience setting up and configuring a BaaS project (Appwrite).
   - Integrated the Appwrite Web SDK into a React application.

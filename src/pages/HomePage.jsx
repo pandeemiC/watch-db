@@ -171,7 +171,7 @@ function HomePage() {
   useEffect(() => {
     fetchMovies(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
-
+  // general fetch
   useEffect(() => {
     loadTrendingMovies();
     fetchMovies();
