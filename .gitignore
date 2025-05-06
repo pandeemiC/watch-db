@@ -7,8 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+#Environment variables
+.env
+.env.*
+!.env.example
+#node dependencies
 node_modules
 dist
+build
 dist-ssr
 *.local
 

@@ -359,7 +359,7 @@ function MovieDetails() {
                     <div>
                       <strong className="text-gray-400 block">
                         Release Date
-                      </strong>{" "}
+                      </strong>
                       {new Date(movie.release_date).toLocaleDateString(
                         undefined,
                         {
@@ -367,15 +367,15 @@ function MovieDetails() {
                           month: "long",
                           day: "numeric",
                         }
-                      )}{" "}
+                      )}
                       {movie.production_countries?.length > 0
                         ? `(${movie.production_countries[0].name})`
-                        : ""}{" "}
+                        : ""}
                     </div>
                   )}
                   {movie.production_countries?.length > 0 && (
                     <div>
-                      <strong className="text-gray-400 block">Countries</strong>{" "}
+                      <strong className="text-gray-400 block">Countries</strong>
                       {movie.production_countries
                         .map((country) => country.name)
                         .join(" · ")}
@@ -383,13 +383,13 @@ function MovieDetails() {
                   )}
                   {movie.status && (
                     <div>
-                      <strong className="text-gray-400 block">Status</strong>{" "}
+                      <strong className="text-gray-400 block">Status</strong>
                       {movie.status}
                     </div>
                   )}
                   {movie.spoken_languages?.length > 0 && (
                     <div>
-                      <strong className="text-gray-400 block">Language</strong>{" "}
+                      <strong className="text-gray-400 block">Language</strong>
                       {movie.spoken_languages
                         .map((lang) => lang.english_name)
                         .join(" · ")}
@@ -397,19 +397,19 @@ function MovieDetails() {
                   )}
                   {movie.budget > 0 && (
                     <div>
-                      <strong className="text-gray-400 block">Budget</strong>{" "}
+                      <strong className="text-gray-400 block">Budget</strong>
                       {formatCurrency(movie.budget)}
                     </div>
                   )}
                   {movie.revenue > 0 && (
                     <div>
-                      <strong className="text-gray-400 block">Revenue</strong>{" "}
+                      <strong className="text-gray-400 block">Revenue</strong>
                       {formatCurrency(movie.revenue)}
                     </div>
                   )}
                   {movie.tagline && (
                     <div>
-                      <strong className="text-gray-400 block">Tagline</strong>{" "}
+                      <strong className="text-gray-400 block">Tagline</strong>
                       <em className="text-gray-300">"{movie.tagline}"</em>
                     </div>
                   )}
@@ -417,9 +417,9 @@ function MovieDetails() {
                     <div className="sm:col-span-2">
                       <strong className="text-gray-400 block">
                         Production Companies
-                      </strong>{" "}
+                      </strong>
                       {movie.production_companies
-                        .map((c) => c.name)
+                        .map((company) => company.name)
                         .join(" · ")}
                     </div>
                   )}

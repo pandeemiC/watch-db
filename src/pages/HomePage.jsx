@@ -98,7 +98,7 @@ function HomePage() {
           const randomMovie = moviesWithBackdrops[randomIndex];
           const originalIndex = results.findIndex(
             (movie) => movie.id === randomMovie.id
-          );
+          ); //fallback
 
           setCurrentHeroIndex(originalIndex >= 0 ? originalIndex : 0);
         } else {
@@ -171,17 +171,18 @@ function HomePage() {
   useEffect(() => {
     fetchMovies(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
+
   // general fetch
   useEffect(() => {
     loadTrendingMovies();
     fetchMovies();
     fetchHighestRatedMovies();
   }, []);
-
+  // heroIndex
   useEffect(() => {
     if (movieList.length > 0 && currentHeroIndex !== null) {
       const intervalId = setInterval(() => {
-        handleNextHero(); // mention the interval
+        handleNextHero();
       }, 8000); // 8 secs
       // cleaning up of the interval
       return () => {
