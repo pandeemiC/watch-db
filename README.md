@@ -1,7 +1,7 @@
 # WatchDB 🎬: Movie Discovery
 
 <p align="center">
-  <img src="<./logo.png>" alt="WatchDBLogo" width="100%">
+  <img src="<./public/logo.png>" alt="WatchDBLogo" width="100%">
 </p>
 
 **WatchDB** is a modern responsive web application built with React and Tailwind CSS, designed for discovering and exploring movies. Making use of The Movie Database (TMDb) API and exploring backend capabilities with **Appwrite**, users can browse popular and top-rated films, search for specific titles, view detailed information, and interact with basic analytics features(?).
