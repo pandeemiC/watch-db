@@ -33,7 +33,8 @@ _(Replace these placeholders with actual screenshots of your application!)_
 
 |           Homepage (Desktop)           |             Movie Details (Desktop)             |
 | :------------------------------------: | :---------------------------------------------: |
-| ![Homepage](./public/watchdb_hero.png) | ![Movie Details](./public/watchdb_details1.png) |
+| ![Homepage](./public/watchdb_hero.png) | ![Movie Details](./public/watchdb_details1.png) 
+https://i.imgur.com/NZkWIEV.png|
 
 |                      Cards                      |                 Image Lightbox                  |
 | :---------------------------------------------: | :---------------------------------------------: |
