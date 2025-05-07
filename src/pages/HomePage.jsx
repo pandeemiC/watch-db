@@ -368,7 +368,7 @@ function HomePage() {
         })()}
       {/* REST OF LAYOUT W SEARCH */}
       <div className="wrapper px-4 md:px-8 lg:px-12 pt-10">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
             Find <span className="text-gradient">Movies</span> You'll Enjoy
             Without the Hassle
@@ -423,7 +423,7 @@ function HomePage() {
               to="/browse"
               className="inline-block my-6 text-indigo-400 hover:text-indigo-300 transition-colors"
             >
-              → View More
+              → Browse More
             </RouterLink>
           </div>
         </section>
@@ -451,7 +451,7 @@ function HomePage() {
               to="/browse"
               className="inline-block my-6 text-indigo-400 hover:text-indigo-300 transition-colors"
             >
-              → View More
+              → Browse More
             </RouterLink>
           </div>
         </section>

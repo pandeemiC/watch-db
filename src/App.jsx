@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import MovieDetails from "./pages/MovieDetails";
-import BrowsePage from "./pages/BrowsePage";
+import BrowsePage from "./pages/BrowsePageMovie";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
