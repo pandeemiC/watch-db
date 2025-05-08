@@ -319,7 +319,7 @@ function HomePage() {
                     <div className="flex flex-row gap-10 backdrop-blur-sm bg-black/20 p-2 rounded-full">
                       <button
                         onClick={handlePrevHero}
-                        className="text-white/80 hover:text-white disabled:text-white/30 transition-colors duration-200 focus:outline-none"
+                        className="text-white/80 cursor-pointer hover:text-white disabled:text-white/30 transition-colors duration-200 focus:outline-none"
                         aria-label="Previous hero movie"
                         disabled={movieList.length <= 1}
                       >
@@ -340,7 +340,7 @@ function HomePage() {
                       </button>
                       <button
                         onClick={handleNextHero}
-                        className="text-white/80 hover:text-white disabled:text-white/30 transition-colors duration-200 focus:outline-none"
+                        className="text-white/80 cursor-pointer hover:text-white disabled:text-white/30 transition-colors duration-200 focus:outline-none"
                         aria-label="Next hero movie"
                         disabled={movieList.length <= 1}
                       >
