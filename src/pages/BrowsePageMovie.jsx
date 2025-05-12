@@ -59,8 +59,7 @@ function BrowsePage() {
         setErrorMessage("API Key is missing for genres.");
         return;
       }
-      setIsLoading(true);
-      setErrorMessage("");
+
       try {
         const endpoint = `${API_BASE_URL}/genre/movie/list?language=en`;
         const response = await fetch(endpoint, API_OPTIONS);
@@ -76,6 +75,12 @@ function BrowsePage() {
     };
     fetchAllGenres();
   }, []);
+
+  useEffect(() => {
+    setMovies([]);
+    setCurrentPage(1);
+    fetchMoviesFS(1, false);
+  }, [selectedGenres, selectedYear, sortBy, debouncedSearchTerm]);
 
   async function fetchMoviesFS(pageToFetch = 1, loadMore = false) {
     if (!API_KEY) {
@@ -146,6 +151,8 @@ function BrowsePage() {
       if (loadMore) setIsLoadingMore(false) && setIsLoading(false);
     }
   }
+
+  // Utilities for func
 
   return (
     <main className="wrapper px-4 md:px-8 lg:px-12 py-8 min-h-screen">
