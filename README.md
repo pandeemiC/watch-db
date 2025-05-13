@@ -1,8 +1,6 @@
 # WatchDB 🎬: Movie Discovery
 
-<p align="center">
-  <img src="<./public/logo.png>" alt="WatchDBLogo" width="100%">
-</p>
+![LOGO](./public/logo.png)
 
 **WatchDB** is a modern responsive web application built with React and Tailwind CSS, designed for discovering and exploring movies (more categories to come). Making use of The Movie Database (TMDb) API and exploring backend capabilities with **Appwrite**, users can browse popular and top-rated movies, search for specific titles, view detailed information, filter through genres and interact with basic analytics features(?).
 
@@ -87,7 +85,6 @@ _(Replace these placeholders with actual screenshots of your application!)_
 - **Utilities:**
   - `react-use` (specifically `useDebounce`)
   - `fetch` API (Browser built-in for API calls)
-- **Deployment:** [***]
 
 ---
 
@@ -104,8 +101,7 @@ Follow these instructions to get a local copy up and running for development pur
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/[YourGitHubUsername]/[YourRepoName].git
-    cd [YourRepoName]
+    git clone https://github.com/[pandeemiC]/[watch_db].git
     ```
 2.  **Install dependencies:**
     ```bash
