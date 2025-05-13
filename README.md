@@ -4,27 +4,27 @@
   <img src="<./public/logo.svg>" alt="WatchDBLogo" width="100%">
 </p>
 
-**WatchDB** is a modern responsive web application built with React and Tailwind CSS, designed for discovering and exploring movies. Making use of The Movie Database (TMDb) API and exploring backend capabilities with **Appwrite**, users can browse popular and top-rated films, search for specific titles, view detailed information, and interact with basic analytics features(?).
+**WatchDB** is a modern responsive web application built with React and Tailwind CSS, designed for discovering and exploring movies (more categories to come). Making use of The Movie Database (TMDb) API and exploring backend capabilities with **Appwrite**, users can browse popular and top-rated movies, search for specific titles, view detailed information, filter through genres and interact with basic analytics features(?).
 
 ---
 
 ## Table of Contents
 
-- [📸 Screenshots](#-screenshots)
-- [🚀 Features](#-features)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [⚙️ Getting Started](#️-getting-started)
+- [Screenshots](#-screenshots)
+- [Features](#-features)
+- [Tech Stack](#️-tech-stack)
+- [Getting Started](#️-getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation & Setup](#installation--setup)
   - [Running the App](#running-the-app)
-- [🔑 API](#-api)
-- [🧠 Developer Experience & Learning](#-developer-experience--learning)
-- [🔮 Future Enhancements](#-future-enhancements)
-- [👋 Contact](#-contact)
+- [API](#-api)
+- [Developer Experience & Learning](#-developer-experience--learning)
+- [Future Enhancements](#-future-enhancements)
+- [Contact](#-contact)
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 _(Replace these placeholders with actual screenshots of your application!)_
 
@@ -47,7 +47,7 @@ _(Replace these placeholders with actual screenshots of your application!)_
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Discover Movies:** Browse sections for:
   - Popular Movies (Fetched dynamically)
@@ -144,13 +144,13 @@ Follow these instructions to get a local copy up and running for development pur
 
 ---
 
-## 🔑 API
+## API
 
 This project relies heavily on [The Movie Database (TMDb) API](https://developer.themoviedb.org/docs) to fetch movie data, images, credits, and more. You **must** obtain your own free API key from TMDb to run this application locally or deploy your own instance.
 
 ---
 
-## 🧠 Developer Experience & Learning
+## Developer Experience & Learning
 
 **Motivation:**
 My primary goal was to honestly make something that is real-world friendly. A project that I could use on my spare time but also something that I could recommend to my friends and family. In the end, it was a great practice and learning experience to further get better at developing under related technologies.
@@ -161,9 +161,7 @@ My primary goal was to honestly make something that is real-world friendly. A pr
 - **Routing:** Implementing client-side routing for a multi-page feel using `react-router-dom`, including dynamic routes with URL parameters (`useParams`) for the movie detail pages.
 - **API Integration:** Making asynchronous API calls using the `fetch` API and `async/await`, handling responses, parsing JSON data, and managing loading/error states. Understanding API documentation (TMDb).
 - **Backend-as-a-Service (Appwrite):**
-  - Gained experience setting up and configuring a BaaS project (Appwrite).
-  - Integrated the Appwrite Web SDK into a React application.
-  - Enabled basic CRUD operations (specifically creating/updating documents) with the Appwrite Database to persist data (search counts).
+  - Gained experience setting up and configuring a BaaS project (Appwrite)
   - Learned about database/collection structuring and permissions within Appwrite. (KIND OF)
 - **State Management Patterns:** Encountered and solved the "stale closure" problem in event handlers using functional state updates (`setState(prevState => ...)`), ensuring reliable state transitions, particularly in the image lightbox navigation.
 - **Styling with Tailwind CSS:** Leveraging utility-first CSS for rapid development, creating responsive layouts using breakpoints (`md:`, `lg:`), styling components, and implementing custom effects like gradients and glows.
@@ -188,7 +186,7 @@ Overall, building this site was an invaluable learning experience, pushing me to
 - [ ] User Authentication (Sign Up/Log In) (streaming availability &&)
 - [ ] Watchlist / Favorites Functionality
 - [ ] User Reviews
-- [ ] More Advanced Filtering & Sorting Options (by genre, year, etc.)
+- [ ] <del>More Advanced Filtering & Sorting Options (by genre, year, etc.)</del>
 - [ ] Several Pages with Add/Remove Functionalities (Related to Favorites)
 - [ ] Integration with other APIs (e.g., streaming availability) (MAYBE)
 - [ ] Add Skeleton Loaders for better perceived performance
