@@ -306,6 +306,17 @@ function BrowsePage() {
             />
           </div>
         </div>
+
+        {isLoading && movies.length === 0 && (
+          <div className="flex justify-center py-10">
+            <Spinner />
+          </div>
+        )}
+        {!isLoading && !errorMessage && movies.length === 0 && (
+          <p className="text-3xl text-center py-10">
+            Oops.. No movies have been found 😭
+          </p>
+        )}
       </section>
     </main>
   );
