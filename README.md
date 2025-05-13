@@ -24,8 +24,6 @@
 
 ## Screenshots
 
-_(Replace these placeholders with actual screenshots of your application!)_
-
 <details>
 <summary>Click to view screenshots</summary>
 
