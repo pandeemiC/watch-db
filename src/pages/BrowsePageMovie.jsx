@@ -317,6 +317,33 @@ function BrowsePage() {
             Oops.. No movies have been found 😭
           </p>
         )}
+
+        {movies.length > 0 && (
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {movies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </ul>
+        )}
+
+        {!isLoadingMore && currentPage < totalPages && movies.length > 0 && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={handleLoadMore}
+              className="inline-block text-slate-800 
+              bg-gradient font-semibold px-6 py-3 rounded-lg transition duration-300 ease-in-out 
+              transform hover:scale-[1.03] hover:shadow-lg hover:shadow-purple-500/30 focus:outline-none 
+              focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-[#AB8BFF] cursor-pointer"
+            >
+              Load More →
+            </button>
+          </div>
+        )}
+        {isLoadingMore && (
+          <div className="flex justify-center py-10">
+            <Spinner />
+          </div>
+        )}
       </section>
     </main>
   );
