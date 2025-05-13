@@ -159,7 +159,7 @@ function MovieDetails() {
     <div className="wrapper px-4 md:px-8 lg:px-16 py-8 text-white">
       {/* Back Button */}
       <RouterLink
-        to="/"
+        to="/browse"
         className="inline-block mb-6 text-indigo-400 hover:text-indigo-300 transition-colors"
       >
         ← Back to List
@@ -468,25 +468,20 @@ function MovieDetails() {
                 Images
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {lightboxImages.slice(0, 6).map(
-                  (
-                    img,
-                    index // Show a few more
-                  ) => (
-                    <button
-                      key={img.file_path}
-                      onClick={() => openLightBox(index)}
-                      className="block w-full h-auto rounded-lg overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900 group"
-                      aria-label={`View ${index + 1} enlarged`}
-                    >
-                      <img
-                        src={getImageUrl(img.file_path, "w780")}
-                        alt={`Backdrop ${index + 1}`}
-                        className="w-full h-full object-cover transition duration-300 group-hover:scale-110"
-                      />
-                    </button>
-                  )
-                )}
+                {lightboxImages.slice(0, 6).map((img, index) => (
+                  <button
+                    key={img.file_path}
+                    onClick={() => openLightBox(index)}
+                    className="block w-full h-auto rounded-lg overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900 group"
+                    aria-label={`View ${index + 1} enlarged`}
+                  >
+                    <img
+                      src={getImageUrl(img.file_path, "w780")}
+                      alt={`Backdrop ${index + 1}`}
+                      className="w-full h-full object-cover transition duration-300 group-hover:scale-110"
+                    />
+                  </button>
+                ))}
               </div>
             </section>
           )}
@@ -502,7 +497,7 @@ function MovieDetails() {
           aria-labelledby="lightbox-image"
         >
           <div
-            className="relative w-full h-full flex items-center justify-center" // Adjusted to use full overlay space for button positioning
+            className="relative w-full h-full flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative inline-block max-w-[90vw] max-h-[90vh] align-middle">

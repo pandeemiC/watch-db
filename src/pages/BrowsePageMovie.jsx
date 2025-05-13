@@ -72,15 +72,16 @@ function BrowsePage() {
         console.error("Error fetching genres", error);
         setErrorMessage("Could not load genre options");
       }
+      fetchMoviesFS(1, false);
     };
     fetchAllGenres();
   }, []);
 
-  useEffect(() => {
-    setMovies([]);
-    setCurrentPage(1);
-    fetchMoviesFS(1, false);
-  }, [selectedGenres, selectedYear, sortBy, debouncedSearchTerm]);
+  // useEffect(() => {
+  //   setMovies([]);
+  //   setCurrentPage(1);
+  //   fetchMoviesFS(1, false);
+  // }, [selectedGenres, selectedYear, sortBy, debouncedSearchTerm]);
 
   async function fetchMoviesFS(pageToFetch = 1, loadMore = false) {
     if (!API_KEY) {
