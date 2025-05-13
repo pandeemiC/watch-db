@@ -99,7 +99,7 @@ Follow these instructions to get a local copy up and running for development pur
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/[pandeemiC]/[watch_db].git
+    git clone https://github.com/[pandeemiC]/[watch-db].git
     ```
 2.  **Install dependencies:**
     ```bash
